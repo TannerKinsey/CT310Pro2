@@ -9,12 +9,12 @@
 		<?php echo Asset::js("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js");?>
 		<?php echo Asset::css('Florida-style.css'); ?>
 	</head>
-	<body>
+<!--	<body>
 		<div id="mainContent">
 			<?=$content; ?>
 		</div>
 		
-	</body>
+	</body>-->
 
 <!-- this is where i need to put the generic attractions -->
 
@@ -22,21 +22,17 @@
 	<nav class="navbar navbar-fixed-top">
 		<div class="container-fluid">
 			<ul class="nav navbar-nav navbar-justified">
-	 			<li class="active"><a href="Welcome.php">Home</a></li>
+	 			
 	 			<?php
-//                     $conn = new mysqli ('faure', 'tjkinsey', '830890327', 'MariaDB');
-                    //$id = DB::select('attractionID')->from('attractions')->where('attractionID', 3);
-                    //print_r($id);
-                    //
-                    
-                    //echo '<li><a href=' . $id . '>' . $name . '</a></li>';
                     
                     foreach($demos as $d){?>
-                        
-                        <li><a href= 'florida/attraction/<?php echo $d['attractionID'] ?>' ><?php echo $d['attractionName'] ?></a></li>
+
+                        <li><a href= "<?= Uri::create('florida/attractions/' . $d['attractionID'])?>"><?= $d['attractionName']?></a></li>
                         
                     <?php } ?>
-                        
+                    
+                <li class="active"><a href="../add.php">Add</a></li>
+	 			<li><a href= "../comment.php">Comment</a></li>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-justified">
@@ -108,15 +104,14 @@
   		</a>
 	</div>
 	
-<!--	<div class="container text-center">
-	  <h3> Welcome to Florida</h3>
-        <p>
-            Florida, which joined the union as the 27th state in 1845, is nicknamed the Sunshine State and known for its balmy climate and natural beauty. Spanish explorer Juan Ponce de Leon, who led the first European expedition to Florida in 1513, named the state in tribute to Spain&rsquo;s Easter celebration known as &ldquo;Pascua Florida,&rdquo; or Feast of Flowers. During the first half of the 1800s, U.S. troops waged war with the region&rsquo;s Native American population. During the Civil War, Florida was the third state to secede from the Union. Beginning in the late 19th century, residents of Northern states flocked to Florida to escape harsh winters. In the 20th century, tourism became Florida&rsquo;s leading industry and remains so today, attracting millions of visitors annually. Florida is also known for its oranges and grapefruit, and some 80 percent of America&rsquo;s citrus is grown there.
-        </p>
-        <p>
-            Information from <a href="https://www.history.com/topics/us-states/florida">History.com</a>
-        </p>	
-	</div>-->
+		<body>
+		<div id="mainContent">
+			<?=$content; ?>
+		</div>
+		
+	</body>
+	
+	
 	<div id="footer">
 			Part of a <a href="https://www.cs.colostate.edu/~ct310/">CT310</a> Course Project
 		</div>
