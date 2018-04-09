@@ -4,6 +4,12 @@ use Model\Ormflorida;
 class Controller_Florida extends Controller
 {
 	public function action_login(){
+	
+        $attractions = OrmFlorida::find('all');
+        
+        $layout = View::forge('Florida/layout');
+        
+        $layout->set_safe('demos', $attractions);
 		
 		$username = Input::post('username');
 
@@ -16,7 +22,7 @@ class Controller_Florida extends Controller
 			
 			Session::set('userid', 12345);
 
-			Response::redirect("Florida/welcome");
+			Response::redirect("Florida/attractions/1");
 
 			return $layout;
 		}
@@ -27,7 +33,7 @@ class Controller_Florida extends Controller
 			
 			Session::set('userid', 123456);
 			
-			Response::redirect("Florida/welcome");
+			Response::redirect("Florida/attractions/1");
 			
 			
 		}
@@ -38,7 +44,7 @@ class Controller_Florida extends Controller
 			
 			Session::set('userid', 1234567);
 			
-			Response::redirect("Florida/welcome");
+			Response::redirect("Florida/attractions/1");
 			
 		}
 		else{
@@ -47,6 +53,13 @@ class Controller_Florida extends Controller
 	
 	}
     public function action_logout(){
+    
+        $attractions = OrmFlorida::find('all');
+        
+        $layout = View::forge('Florida/layout');
+        
+        $layout->set_safe('demos', $attractions);
+    
     
 		$session = Session::instance(); 
 
@@ -69,8 +82,12 @@ class Controller_Florida extends Controller
 	}	
 	
     public function action_loginError(){
+    
+        $attractions = OrmFlorida::find('all');
         
         $layout = View::forge('Florida/layout');
+        
+        $layout->set_safe('demos', $attractions);
 
         $content = View::forge('Florida/loginError');
         
@@ -81,24 +98,38 @@ class Controller_Florida extends Controller
 	}
 	
 	//passing the parameter $id to determine which attraction to load
-	public function attraction($id){
-    
+	public function action_attractions($id){
+	
+        $attractions = OrmFlorida::find('all');
         
         $layout = View::forge('Florida/layout');
+        
+        $layout->set_safe('demos', $attractions);
 
-        $content = View::forge('Florida/welcome');
+        $content = View::forge('Florida/attractions');
+        
+        $attractions = OrmFlorida::find($id);
+        
+        $content->set_safe('attractionName', $attractions['attractionName']);
+        
+        $content->set_safe('description', $attractions['description']);
         
         $layout->content = Response::forge($content);
-
+        
+        
 		return $layout;
 	
 	}
 	
 	
     public function action_aboutus(){
-        
+    
+        $attractions = OrmFlorida::find('all');
+    
         $layout = View::forge('Florida/layout');
-
+    
+        $layout->set_safe('demos', $attractions);
+        
         $content = View::forge('Florida/aboutus');
         
         $layout->content = Response::forge($content);
@@ -108,12 +139,17 @@ class Controller_Florida extends Controller
 	}
 	
     public function action_comment(){
-        
+    
+        $attractions = OrmFlorida::find('all');
+    
         $layout = View::forge('Florida/layout');
+    
+        $layout->set_safe('demos', $attractions);
+        
 
         $content = View::forge('Florida/comment');
         
-        $layout->content = Response::forge($content);
+//         $layout->content = Response::forge($content);
         
         $POST=Input::post("comments");
         $cvar="";
@@ -126,16 +162,14 @@ class Controller_Florida extends Controller
         }
         $content->set_safe("cvar", $cvar);
         
+        $layout->set_safe('demos', $attractions);
+        
         $layout->content = Response::forge($content);
         
         return $layout;
 	}
 	
     public function action_index(){
-
-//         $query = DB::select('firstName')->from('students')->where('age', 19)->execute();
-//         
-//         print_r($query);
     
 		//load the layout
 		$layout = View::forge('Florida/layout');
@@ -150,8 +184,6 @@ class Controller_Florida extends Controller
 		//something is happening here
 		//demos is the variable from the database
 		$content->set_safe('demos', $attractions);
-		
-		
 
 		//forge inner view
 		$layout->content = Response::forge($content);
@@ -162,10 +194,14 @@ class Controller_Florida extends Controller
 	}
 	
     public function get_add(){
-		
+    
+        $attractions = OrmFlorida::find('all');
+    
 		//load the layout
 		$layout = View::forge('Florida/layout');
 
+        $layout->set_safe('demos', $attractions);
+		 
 		//load the view
 		$content = View::forge('Florida/add');
 
@@ -176,6 +212,14 @@ class Controller_Florida extends Controller
 	}
 
 	public function post_add(){
+	
+        $attractions = OrmFlorida::find('all');
+        
+        $layout = View::forge('Florida/layout');
+	
+        $layout->set_safe('demos', $attractions);
+	
+	
 	
 		//extract course name, number and assignments from the input parameters
 		$attractionName = $_POST['attractionName'];
@@ -192,7 +236,7 @@ class Controller_Florida extends Controller
 		$new->save();
 
 		//reload the index page with the newly saved view
-		Response::redirect('index.php/florida');
+		Response::redirect('florida/add.php');
 	}
 }
 ?>
