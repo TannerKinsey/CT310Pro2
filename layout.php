@@ -9,14 +9,6 @@
 		<?php echo Asset::js("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js");?>
 		<?php echo Asset::css('Florida-style.css'); ?>
 	</head>
-<!--	<body>
-		<div id="mainContent">
-			<?=$content; ?>
-		</div>
-		
-	</body>-->
-
-<!-- this is where i need to put the generic attractions -->
 
 <body>
 	<nav class="navbar navbar-fixed-top">
@@ -31,8 +23,12 @@
                         
                     <?php } ?>
                     
-                <li class="active"><a href="../add.php">Add</a></li>
+               <!-- <li><a href="../add.php">Add</a></li>
 	 			<li><a href= "../comment.php">Comment</a></li>
+	 			<li><a href= "../emailrecover.php">Password Recover</a></li>-->
+	 			<li><a href= "<?= Uri::create('florida/add.php')?>">Add</a></li>
+	 			<li><a href= "<?= Uri::create('florida/comment.php')?>"> Comment </a></li>
+	 			<!--<li><a href= "<?= Uri::create('florida/set.php')?>"> Password Recover </a></li>-->
 
 			</ul>
 			<ul class="nav navbar-nav navbar-justified">
@@ -46,7 +42,9 @@
                                     <input name="username" id="username" type="text" placeholder="Username"> 
                                     <input name="password" id="password" type="password" placeholder="Password"><br>
                                     <input type="submit" value="login">
+                                    <li><a href= "forgotpassword.php"> Forgot password? </a></li>
 				</form>
+				
 				<?php } else { ?>
                             <form action="logout" method="POST"> 
                                     <input name="username" id="username" type="text" placeholder="Username"> 
@@ -105,9 +103,9 @@
 	</div>
 	
 		<body>
-		<div id="mainContent">
-			<?=$content; ?>
-		</div>
+		<!--<div id="mainContent">-->
+ 		<?=$content; ?>
+		<!--</div>-->
 		
 	</body>
 	
