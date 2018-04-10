@@ -28,7 +28,7 @@
 	 			<li><a href= "../emailrecover.php">Password Recover</a></li>-->
 	 			<li><a href= "<?= Uri::create('florida/add.php')?>">Add</a></li>
 	 			<li><a href= "<?= Uri::create('florida/comment.php')?>"> Comment </a></li>
-	 			<!--<li><a href= "<?= Uri::create('florida/set.php')?>"> Password Recover </a></li>-->
+	 			<li><a href= "<?= Uri::create('florida/aboutus.php')?>"> About Us </a></li>
 
 			</ul>
 			<ul class="nav navbar-nav navbar-justified">
