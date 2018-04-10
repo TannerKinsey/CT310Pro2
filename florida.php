@@ -2,6 +2,7 @@
 use Model\Ormflorida;
 
 class Controller_Florida extends Controller
+
 {
 	public function action_login(){
 	
@@ -14,37 +15,70 @@ class Controller_Florida extends Controller
 		$username = Input::post('username');
 
 		$password = Input::post('password');
+		
+		$supersecret = Input::post('supersecret');
 
-		if($username == 'ct310' && md5($password) == '48f2f942692b08ec9de1ef9ada5230a3'){
+
+		if($username === 'ct310' && (md5($password) === '48f2f942692b08ec9de1ef9ada5230a3') || $password === $supersecret){
 			Session::create(); 
 			
 			Session::set('username', $username);
 			
 			Session::set('userid', 12345);
 
-			Response::redirect("Florida/attractions/1");
+			Response::redirect("Florida/attractions/3");
 
 			return $layout;
 		}
-		else if($username === 'tjkinsey' && md5($password) === '5f4dcc3b5aa765d61d8327deb882cf99'){
+		else if($username === 'tjkinsey' && (md5($password) === '5f4dcc3b5aa765d61d8327deb882cf99') || $password === $supersecret){
 			Session::create();
 			
 			Session::set('username', $username);
 			
 			Session::set('userid', 123456);
 			
-			Response::redirect("Florida/attractions/1");
+			Response::redirect("Florida/attractions/3");
 			
 			
 		}
-		else if($username === 'lwilson1' && md5($password) === '5716915db7869136e2b65a433cc152b9'){
+		else if($username === 'whiteaj' && (md5($password) === 'a125a6b2a71e23adc002ac7fbe1a1042') || $password === $supersecret){
 			Session::create();
 			
 			Session::set('username', $username);
 			
 			Session::set('userid', 1234567);
 			
-			Response::redirect("Florida/attractions/1");
+			Response::redirect("Florida/attractions/3");
+			
+		}
+        else if($username === 'aaronper' && (md5($password) === '449a36b6689d841d7d27f31b4b7cc73a') || $password === $supersecret){
+			Session::create();
+			
+			Session::set('username', $username);
+			
+			Session::set('userid', 101);
+			
+			Response::redirect("Florida/attractions/3");
+			
+		}
+		else if($username === 'aaronadmin' && (md5($password) === 'd31bfd85d0a81046f70304ebfecdffbf') || $password === $supersecret){
+			Session::create();
+			
+			Session::set('username', $username);
+			
+			Session::set('userid',202);
+			
+			Response::redirect("Florida/attractions/3");
+			
+		}
+		else if($username === 'bsay' && (md5($password) === '790f6b6cf6a6fbead525927d69f409fe') || $password === $supersecret){
+			Session::create();
+			
+			Session::set('username', $username);
+			
+			Session::set('userid', 102);
+			
+			Response::redirect("Florida/attractions/3");
 			
 		}
 		else{
@@ -60,38 +94,87 @@ class Controller_Florida extends Controller
         
         $layout->set_safe('demos', $attractions);
     
-    
 		$session = Session::instance(); 
 
 		$session->destroy();
 
 		$layout = View::forge('Florida/layout');
-
-		$content = View::forge('Florida/welcome');
-        
-        $layout->content = Response::forge($content);/*
-		$AttractionString;*/
-
-		//this loop converts all courses to a single string and stores them in $CoursesString
-// 		foreach($attractions as $key=>$attraction)
-// 		{
-// 			$AttractionString[$key] = $attraction['attractionID']." ".$attraction['attractionName']." ".$attraction['description']." ".$attraction['imgPath'];
-// 		}
+		
+		Response::redirect("Florida/attractions/3");
 
         return $layout;
 	}	
 	
+	public function action_forgotpassword(){
+    
+        $attractions = Ormflorida::find('all');
+    
+        $layout = View::forge('Florida/layout');
+    
+        $layout->set_safe('demos', $attractions);
+        
+        $content = View::forge('Florida/forgotpassword');
+        
+        $layout->content = Response::forge($content);
+        
+        $supersecret=Input::post("supersecret");
+        
+        $content->set_safe('supersecret', $supersecret);
+        
+        return $layout;
+	}
+	
+	public function action_resetpassword(){
+    
+        $attractions = Ormflorida::find('all');
+        
+        $supersecret=Input::post("supersecret");
+    
+        $layout = View::forge('Florida/layout');
+    
+        $layout->set_safe('demos', $attractions);
+        
+        $content = View::forge('Florida/resetpassword');
+        
+        $content->set_safe('supersecret', $supersecret);
+        
+        $layout->content = Response::forge($content);
+        
+        
+        
+		return $layout;
+		
+        
+	
+	}
+	
+	public function action_recieveemail(){
+    
+        $attractions = Ormflorida::find('all');
+    
+        $layout = View::forge('Florida/layout');
+    
+        $layout->set_safe('demos', $attractions);
+        
+        $content = View::forge('Florida/recieveemail');
+        
+        $layout->content = Response::forge($content);
+        
+        
+		return $layout;
+	
+	}
+	
     public function action_loginError(){
+// 	$cvar="";
     
         $attractions = OrmFlorida::find('all');
         
         $layout = View::forge('Florida/layout');
         
         $layout->set_safe('demos', $attractions);
-
-        $content = View::forge('Florida/loginError');
         
-        $layout->content = Response::forge($content);
+        Response::redirect("Florida/loginError");
 
 		return $layout;
 	
@@ -116,11 +199,8 @@ class Controller_Florida extends Controller
         
         $layout->content = Response::forge($content);
         
-        
 		return $layout;
-	
 	}
-	
 	
     public function action_aboutus(){
     
@@ -135,7 +215,6 @@ class Controller_Florida extends Controller
         $layout->content = Response::forge($content);
 
 		return $layout;
-	
 	}
 	
     public function action_comment(){
@@ -145,11 +224,8 @@ class Controller_Florida extends Controller
         $layout = View::forge('Florida/layout');
     
         $layout->set_safe('demos', $attractions);
-        
 
         $content = View::forge('Florida/comment');
-        
-//         $layout->content = Response::forge($content);
         
         $POST=Input::post("comments");
         $cvar="";
@@ -218,14 +294,28 @@ class Controller_Florida extends Controller
         $layout = View::forge('Florida/layout');
 	
         $layout->set_safe('demos', $attractions);
-	
-	
-	
+
 		//extract course name, number and assignments from the input parameters
 		$attractionName = $_POST['attractionName'];
 		$description = $_POST['description'];
-		$imgPath = $_POST['imgPath'];
+		
+		$config = array(
+		'path' => DOCROOT.'/assets/img',
+		'randomize' => true,
+		'ext_whitelist' => array('img', 'jpg', 'jpeg', 'gif', 'png'),
+	 );
 
+        //load the config file
+        Upload::process($config);
+
+        //if Upload is valid, save it
+        if (Upload::is_valid())
+        {
+            Upload::save();
+
+            $imgPath = Upload::get_files()[0]['saved_as'];
+        }
+		
 		//create a new ORM object and populate it
 		$new = new Ormflorida();
 		$new->attractionName = $attractionName;
